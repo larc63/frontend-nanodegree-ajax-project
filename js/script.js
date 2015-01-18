@@ -9,13 +9,20 @@ function loadData() {
     var $nytHeaderElem = $('#nytimes-header');
     var $nytElem = $('#nytimes-articles');
     var $greeting = $('#greeting');
-
+    var $street = $('#street');
+    var $city = $('#city');
+    
     // clear out old data before new request
     $wikiElem.text("");
     $nytElem.text("");
 
     // load streetview
-
+    var streetStr = $street.val();
+    var cityStr = $city.val();
+    var address = streetStr + ', ' + cityStr;
+    var streetviewUrl = 'http://maps.googleapis.com/maps/api/streetview?size=640x400&location=' + encodeURI(address) + '';
+    $body.append('<img class="bgimg" src="' + streetviewUrl + '">');
+    
     // YOUR CODE GOES HERE!
 
     return false;
@@ -23,7 +30,7 @@ function loadData() {
 
 $('#form-container').submit(loadData);
 
-// loadData();
+//loadData();
 
 $.getJSON( NYT_BASE_URL + "obama&api-key=" + NYT_KEY, function( data ) {
   var items = [];
@@ -44,9 +51,9 @@ $.getJSON( NYT_BASE_URL + "obama&api-key=" + NYT_KEY, function( data ) {
 (function() {
   var $wikiElem = $('#wikipedia-links');
   var wikiRequestTimeout = setTimeout(function(){
-    $wikiElem.text("failed to get ikipedia resources");
+    $wikiElem.text("failed to get wikipedia resources");
   }, 8000);
-  var flickerAPI = "http://en.wikipeffasdfdia.org/w/api.php?format=json&action=opensearch&search=Obama";
+  var flickerAPI = "http://en.wikipedia.org/w/api.php?format=json&action=opensearch&search=Obama";
   $.ajax( {
     url: flickerAPI,
     dataType:'jsonp',
@@ -62,19 +69,3 @@ $.getJSON( NYT_BASE_URL + "obama&api-key=" + NYT_KEY, function( data ) {
     headers: { 'Api-User-Agent-Udacity': 'Example/1.0' }
 });
 })();
-// (function() {
-//   var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
-//   $.getJSON( flickerAPI, {
-//     tags: "mount rainier",
-//     tagmode: "any",
-//     format: "json"
-//   })
-//     .done(function( data ) {
-//       $.each( data.items, function( i, item ) {
-//         $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
-//         if ( i === 3 ) {
-//           return false;
-//         }
-//       });
-//     });
-// })();
