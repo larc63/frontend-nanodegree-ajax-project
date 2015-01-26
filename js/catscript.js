@@ -24,18 +24,18 @@ $(function () {
     var catModel = {
         clowder: new Array(),
         catCount: 0,
-        add: function(kitty){
+        add: function (kitty) {
             this.catCount++;
             this.clowder.push(kitty);
         },
-        getCount: function(){
+        getCount: function () {
             return this.catCount;
         },
         getCats: function () {
             return this.clowder;
         }
     };
-    
+
     var catHerder = {
         clickHandler: function (e) {
             var theId = e.target.id;
@@ -46,6 +46,7 @@ $(function () {
         listClickHandler: function (e) {
             var theId = e.target.id;
             var catId = parseInt(theId.substring(5, theId.length));
+            catFrame.init(catId);
             catFrame.render(catId);
         },
         generate: function () {
@@ -64,7 +65,6 @@ $(function () {
             for (var i = 0; i < cats.length; i++) {
                 var kitty = cats[i];
                 $("#clowder").append('<p id="kitty' + kitty._id + '">' + kitty.name + '</p>');
-
                 $('#kitty' + kitty._id).click(function (e) {
                     catHerder.listClickHandler(e);
                 });
@@ -73,6 +73,12 @@ $(function () {
     };
 
     var catFrame = {
+        init: function (id) {
+            var kitty = catHerder.getCats()[id];
+            $('#kitty' + kitty._id + '-picture').click(function (e) {
+                catHerder.clickHandler(e);
+            });
+        },
         render: function (id) {
             var self = this;
             var kitty = catHerder.getCats()[id];
@@ -82,10 +88,6 @@ $(function () {
             retVal += '<img src = "http://lorempixel.com/300/300/cats/" id = "kitty' + kitty._id + '-picture" / >';
             retVal += '</div>';
             $("#cat-frame").empty().append(retVal);
-
-            $('#kitty' + kitty._id + '-picture').click(function (e) {
-                catHerder.clickHandler(e);
-            });
         }
     }
 
@@ -93,5 +95,6 @@ $(function () {
         catHerder.generate();
     }
     catList.render();
+    catFrame.init(0);
     catFrame.render(0);
 });
