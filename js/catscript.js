@@ -24,6 +24,7 @@ $(function () {
     var catModel = {
         clowder: new Array(),
         catCount: 0,
+        isAdmin: true,
         add: function (kitty) {
             this.catCount++;
             this.clowder.push(kitty);
@@ -37,6 +38,20 @@ $(function () {
     };
 
     var catHerder = {
+        init: function () {
+            for (var i = 0; i < 10; i++) {
+                this.generate();
+            }
+            $("#admin-button").click(function () {
+                if (catModel.isAdmin) {
+                    catModel.isAdmin = false;
+                    $("#form-container").show();
+                } else {
+                    catModel.isAdmin = true;
+                    $("#form-container").hide();
+                }
+            });
+        },
         clickHandler: function (e) {
             var theId = e.target.id;
             var catId = parseInt(theId.substring(5, theId.length - "-picture".length));
@@ -46,7 +61,6 @@ $(function () {
         listClickHandler: function (e) {
             var theId = e.target.id;
             var catId = parseInt(theId.substring(5, theId.length));
-            catFrame.init(catId);
             catFrame.render(catId);
         },
         generate: function () {
@@ -73,12 +87,6 @@ $(function () {
     };
 
     var catFrame = {
-        init: function (id) {
-            var kitty = catHerder.getCats()[id];
-            $('#kitty' + kitty._id + '-picture').click(function (e) {
-                catHerder.clickHandler(e);
-            });
-        },
         render: function (id) {
             var self = this;
             var kitty = catHerder.getCats()[id];
@@ -88,13 +96,14 @@ $(function () {
             retVal += '<img src = "http://lorempixel.com/300/300/cats/" id = "kitty' + kitty._id + '-picture" / >';
             retVal += '</div>';
             $("#cat-frame").empty().append(retVal);
+
+            $('#kitty' + kitty._id + '-picture').click(function (e) {
+                catHerder.clickHandler(e);
+            });
         }
     }
 
-    for (var i = 0; i < 10; i++) {
-        catHerder.generate();
-    }
+    catHerder.init();
     catList.render();
-    catFrame.init(0);
     catFrame.render(0);
 });

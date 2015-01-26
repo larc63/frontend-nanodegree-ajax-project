@@ -12,7 +12,6 @@ body {
 .kittyclicker-container {
     float: right;
     width: 350px;
-    height: 100%;
     padding: 5px;
     margin-right: 5px;
     background-color: rgba(255, 0, 0, 0.7);
@@ -20,7 +19,13 @@ body {
 .kittyclicker-list {
     float: left;
     width: 290px;
-    height: 100%;
+    padding: 5px;
+    margin-left: 5px;
+    background-color: rgba(0, 0, 255, 0.7);
+}
+.kittyclicker-admin {
+    float: right;
+    width: 350px;
     padding: 5px;
     margin-left: 5px;
     background-color: rgba(0, 0, 255, 0.7);

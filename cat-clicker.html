@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Your Moving Companion</title>
@@ -7,12 +8,28 @@
 
     <script src="js/libs/jquery.min.js"></script>
 </head>
+
 <body>
     <div class="kittyclicker-list" id="clowder">
     </div>
-    
+
+    <div class="kittyclicker-admin" id="admin">
+        <button id="admin-button">Admin</button>
+        <form id="form-container" class="form-container" _lpchecked="1">
+            <label for="name">Name:</label>
+            <input type="text" id="name" value="">
+            <label for="url">URL:</label>
+            <input type="text" id="url" value="">
+            <label for="clicks"># of Clicks:</label>
+            <input type="text" id="clicks" value="">
+            <button id="cancel-btn">Cancel</button>
+            <button id="submit-btn">Submit</button>
+        </form>
+    </div>
+
     <div class="kittyclicker-container" id="cat-frame">
     </div>
     <script src="js/catscript.js"></script>
 </body>
+
 </html>
