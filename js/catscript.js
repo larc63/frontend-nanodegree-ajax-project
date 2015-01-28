@@ -42,26 +42,20 @@ $(function () {
             for (var i = 0; i < 10; i++) {
                 this.generate();
             }
-            $("#admin-button").click(function () {
-                if (catModel.isAdmin) {
-                    catModel.isAdmin = false;
-                    $("#form-container").show();
-                } else {
-                    catModel.isAdmin = true;
-                    $("#form-container").hide();
-                }
-            });
+            this.currentCat = this.getCats()[0];
         },
         clickHandler: function (e) {
             var theId = e.target.id;
             var catId = parseInt(theId.substring(5, theId.length - "-picture".length));
-            this.getCats()[catId].handleClick();
+            this.currentCat.handleClick();
             catFrame.render(catId);
         },
         listClickHandler: function (e) {
             var theId = e.target.id;
             var catId = parseInt(theId.substring(5, theId.length));
+            this.currentCat = this.getCats()[catId];
             catFrame.render(catId);
+            adminView.init();
         },
         generate: function () {
             var kitty = new Cat();
@@ -70,6 +64,16 @@ $(function () {
         },
         getCats: function () {
             return catModel.getCats();
+        },
+        isAdmin: function () {
+            return catModel.isAdmin;
+        },
+        toggleIsAdmin: function () {
+            if (catModel.isAdmin === true) {
+                catModel.isAdmin = false;
+            } else {
+                catModel.isAdmin = true;
+            }
         }
     };
 
@@ -101,9 +105,48 @@ $(function () {
                 catHerder.clickHandler(e);
             });
         }
+    };
+
+    var adminView = {
+        init: function () {
+            this.populateWithCurrentCat();
+
+            $("#cancel-btn").click(function (e) {
+                console.log("clicked cancel");
+                $("#name").val(catHerder.currentCat.name);
+                $("#url").val(catHerder.currentCat.url);
+                $("#clicks").val(catHerder.currentCat.kittyClicks);
+            });
+            $("#submit-btn").click(function (e) {
+                console.log("clicked submit");
+                catHerder.currentCat.name = $("#name").val();
+                catHerder.currentCat.url = $("#url").val();
+                catHerder.currentCat.kittyClicks = $("#clicks").val();
+            });
+
+            if (catHerder.isAdmin()) {
+                $("#form-container").show();
+            } else {
+                $("#form-container").hide();
+            }
+            $("#admin-button").click(function () {
+                if (catHerder.isAdmin()) {
+                    $("#form-container").show();
+                } else {
+                    $("#form-container").hide();
+                }
+                catHerder.toggleIsAdmin();
+            });
+        },
+        populateWithCurrentCat: function () {
+            $("#name").val(catHerder.currentCat.name);
+            $("#url").val(catHerder.currentCat.url);
+            $("#clicks").val(catHerder.currentCat.kittyClicks);
+        }
     }
 
     catHerder.init();
     catList.render();
     catFrame.render(0);
+    adminView.init();
 });
