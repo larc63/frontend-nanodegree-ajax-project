@@ -55,7 +55,8 @@ $(function () {
             var catId = parseInt(theId.substring(5, theId.length));
             this.currentCat = this.getCats()[catId];
             catFrame.render(catId);
-            adminView.init();
+            adminView.populateWithCurrentCat();
+            adminView.render();
         },
         generate: function () {
             var kitty = new Cat();
@@ -66,7 +67,7 @@ $(function () {
             return catModel.getCats();
         },
         isAdmin: function () {
-            return catModel.isAdmin;
+            return catModel.isAdmin === true;
         },
         toggleIsAdmin: function () {
             if (catModel.isAdmin === true) {
@@ -109,8 +110,7 @@ $(function () {
 
     var adminView = {
         init: function () {
-            this.populateWithCurrentCat();
-
+            var self = this;
             $("#cancel-btn").click(function (e) {
                 console.log("clicked cancel");
                 $("#name").val(catHerder.currentCat.name);
@@ -123,25 +123,23 @@ $(function () {
                 catHerder.currentCat.url = $("#url").val();
                 catHerder.currentCat.kittyClicks = $("#clicks").val();
             });
-
+            $("#admin-button").click(function () {
+                catHerder.toggleIsAdmin();
+                self.render();
+            });
+        },
+        populateWithCurrentCat: function () {
+            this.render();
+            $("#name").val(catHerder.currentCat.name);
+            $("#url").val(catHerder.currentCat.url);
+            $("#clicks").val(catHerder.currentCat.kittyClicks);
+        },
+        render: function () {
             if (catHerder.isAdmin()) {
                 $("#form-container").show();
             } else {
                 $("#form-container").hide();
             }
-            $("#admin-button").click(function () {
-                if (catHerder.isAdmin()) {
-                    $("#form-container").show();
-                } else {
-                    $("#form-container").hide();
-                }
-                catHerder.toggleIsAdmin();
-            });
-        },
-        populateWithCurrentCat: function () {
-            $("#name").val(catHerder.currentCat.name);
-            $("#url").val(catHerder.currentCat.url);
-            $("#clicks").val(catHerder.currentCat.kittyClicks);
         }
     }
 
