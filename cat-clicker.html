@@ -39,6 +39,9 @@
         <div data-bind='text: clickCount'></div>
         <div data-bind='text: catLevel'></div>
         <img data-bind='click: incrementCounter, attr: {src: imgSrc}'>
+        <ul data-bind='foreach: nicknames'>
+            <li data-bind='text: name'></li>
+        </ul>
     </div>
     
 <!--

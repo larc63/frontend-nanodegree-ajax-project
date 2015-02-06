@@ -156,11 +156,23 @@ var ViewModel = function (first, last) {
     this.clickCount = ko.observable(0);
     this.imgSrc = ko.observable("http://lorempixel.com/300/300/cats/");
     //        this._id = undefined;
-    
-    this.incrementCounter = function(){
-        this.clickCount(this.clickCount()+1);
+    this.nicknames = ko.observableArray([{
+        name: getCatName()
+    }, {
+        name: getCatName()
+    }, {
+        name: getCatName()
+    }, {
+        name: getCatName()
+    }, {
+        name: getCatName()
+    }]);
+
+    this.incrementCounter = function () {
+        this.clickCount(this.clickCount() + 1);
     }
-    
+
+
     this.catLevel = ko.computed(function () {
         if (this.clickCount() < 10) {
             return "kitten";
