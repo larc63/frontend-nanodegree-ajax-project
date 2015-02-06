@@ -6,10 +6,12 @@
     <title>Your Moving Companion</title>
     <link rel="stylesheet" href="css/cat-style.css">
 
-    <script src="js/libs/jquery.min.js"></script>
+<!--    <script src="js/libs/jquery.min.js"></script>-->
+    <script src="js/knockout-3.0.0.js"></script>
 </head>
 
 <body>
+    <!--
     <div class="kittyclicker-list" id="clowder">
     </div>
 
@@ -30,9 +32,26 @@
             <button id="submit-btn">Submit</button>
         </div>
     </div>
+-->
 
     <div class="kittyclicker-container" id="cat-frame">
+        <h1 data-bind='text: name'></h1>
+        <div data-bind='text: clickCount'></div>
+        <div data-bind='text: catLevel'></div>
+        <img data-bind='click: incrementCounter, attr: {src: imgSrc}'>
     </div>
+    
+<!--
+    <div class='liveExample'>
+        <p>First name:
+            <input data-bind='value: firstName' />
+        </p>
+        <p>Last name:
+            <input data-bind='value: lastName' />
+        </p>
+        <h2>Hello, <span data-bind='text: fullName'> </span>!</h2>
+    </div>
+-->
     <script src="js/catscript.js"></script>
 </body>
 
