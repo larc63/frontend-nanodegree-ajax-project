@@ -6,14 +6,12 @@
     <title>Your Moving Companion</title>
     <link rel="stylesheet" href="css/cat-style.css">
 
-<!--    <script src="js/libs/jquery.min.js"></script>-->
+    <!--    <script src="js/libs/jquery.min.js"></script>-->
     <script src="js/knockout-3.0.0.js"></script>
 </head>
 
 <body>
     <!--
-    <div class="kittyclicker-list" id="clowder">
-    </div>
 
     <div class="kittyclicker-admin" id="admin">
         <button id="admin-button">Admin</button>
@@ -33,6 +31,9 @@
         </div>
     </div>
 -->
+    <div class="kittyclicker-list" id="clowder" data-bind="foreach: catList">
+        <p data-bind="click: $parent.selectACat, text: name"></p>
+    </div>
 
     <div class="kittyclicker-container" id="cat-frame" data-bind='with:currentCat'>
         <h1 data-bind='text: name'></h1>
@@ -43,18 +44,6 @@
             <li data-bind='text: name'></li>
         </ul>
     </div>
-    
-<!--
-    <div class='liveExample'>
-        <p>First name:
-            <input data-bind='value: firstName' />
-        </p>
-        <p>Last name:
-            <input data-bind='value: lastName' />
-        </p>
-        <h2>Hello, <span data-bind='text: fullName'> </span>!</h2>
-    </div>
--->
     <script src="js/catscript.js"></script>
 </body>
 

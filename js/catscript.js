@@ -152,22 +152,15 @@ var getCatName = function () {
 
 // Here's my data model
 var Cat = function (data) {
-    this.name = ko.observable(getCatName());
-    this.clickCount = ko.observable(0);
+    var self = this;
+    this.name = ko.observable(data.name);
+    this.clickCount = ko.observable(data.clickCount);
     this.imgSrc = ko.observable("http://lorempixel.com/300/300/cats/");
     //        this._id = undefined;
-    this.nicknames = ko.observableArray([{
-        name: getCatName()
-    }, {
-        name: getCatName()
-    }, {
-        name: getCatName()
-    }, {
-        name: getCatName()
-    }, {
-        name: getCatName()
-    }]);
-
+    this.nicknames = ko.observableArray([]);
+    data.nicknames.forEach(function(nickname){
+        self.nicknames.push({name:nickname});
+    });
 
     this.catLevel = ko.computed(function () {
         if (this.clickCount() < 10) {
@@ -184,11 +177,18 @@ var ViewModel = function () {
 
     this.catList = ko.observableArray([]);
     for (var i = 0; i < 10; i++) {
-        this.catList.push(new Cat({name: getCatName(), clickCount: Math.floor(Math.random()*10000), nicknames: [getCatName(), getCatName()]}));
+        this.catList.push(new Cat({
+            name: getCatName(),
+            clickCount: Math.floor(Math.random() * 10000),
+            nicknames: [getCatName(), getCatName()]
+        }));
     }
     this.currentCat = ko.observable(this.catList()[0]);
     this.incrementCounter = function () {
         self.currentCat().clickCount(self.currentCat().clickCount() + 1);
+    };
+    this.selectACat = function (c) {
+        self.currentCat(c);
     };
 
 };
