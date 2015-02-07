@@ -151,7 +151,7 @@ var getCatName = function () {
 
 
 // Here's my data model
-var ViewModel = function (first, last) {
+var Cat = function (data) {
     this.name = ko.observable(getCatName());
     this.clickCount = ko.observable(0);
     this.imgSrc = ko.observable("http://lorempixel.com/300/300/cats/");
@@ -168,10 +168,6 @@ var ViewModel = function (first, last) {
         name: getCatName()
     }]);
 
-    this.incrementCounter = function () {
-        this.clickCount(this.clickCount() + 1);
-    }
-
 
     this.catLevel = ko.computed(function () {
         if (this.clickCount() < 10) {
@@ -181,12 +177,20 @@ var ViewModel = function (first, last) {
         }
     }, this);
 
-    //            this.firstName = ko.observable(first); this.lastName = ko.observable(last);
-    //
-    //            this.fullName = ko.computed(function () {
-    //                // Knockout tracks dependencies automatically. It knows that fullName depends on firstName and lastName, because these get called when evaluating fullName.
-    //                return this.firstName() + " " + this.lastName();
-    //            }, this);
 };
 
-ko.applyBindings(new ViewModel("Planet", "Earth")); // This makes Knockout get to work
+var ViewModel = function () {
+    var self = this;
+
+    this.catList = ko.observableArray([]);
+    for (var i = 0; i < 10; i++) {
+        this.catList.push(new Cat({name: getCatName(), clickCount: Math.floor(Math.random()*10000), nicknames: [getCatName(), getCatName()]}));
+    }
+    this.currentCat = ko.observable(this.catList()[0]);
+    this.incrementCounter = function () {
+        self.currentCat().clickCount(self.currentCat().clickCount() + 1);
+    };
+
+};
+
+ko.applyBindings(new ViewModel()); // This makes Knockout get to work

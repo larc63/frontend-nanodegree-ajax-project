@@ -34,11 +34,11 @@
     </div>
 -->
 
-    <div class="kittyclicker-container" id="cat-frame">
+    <div class="kittyclicker-container" id="cat-frame" data-bind='with:currentCat'>
         <h1 data-bind='text: name'></h1>
         <div data-bind='text: clickCount'></div>
         <div data-bind='text: catLevel'></div>
-        <img data-bind='click: incrementCounter, attr: {src: imgSrc}'>
+        <img data-bind='click: $parent.incrementCounter, attr: {src: imgSrc}'>
         <ul data-bind='foreach: nicknames'>
             <li data-bind='text: name'></li>
         </ul>
